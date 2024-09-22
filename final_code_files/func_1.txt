@@ -1,0 +1,10 @@
+for art_object in main_population:
+    main_canvas_paper.fill(
+        (255, 255, 255, 255))  # Fill the canvas with white background to keep only one painting on display
+    for ind_triangle in art_object.triangles:
+        paint_window = displayer.Surface((horizontal_width, vertical_height))
+        paint_window.set_colorkey((0, 0, 0))  # For removing black spots
+        paint_window.set_alpha(ind_triangle.transparent_factor)
+        displayer.draw.polygon(paint_window, ind_triangle.triangle_color, ind_triangle.vertices)
+        main_canvas_paper.blit(paint_window, (0, 0))
+    art_object.fit_calc()

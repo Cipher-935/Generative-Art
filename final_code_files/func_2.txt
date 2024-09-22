@@ -1,0 +1,7 @@
+for best_triangle in top_match.triangles:
+    curr_window = displayer.Surface((horizontal_width, vertical_height))
+    curr_window.set_colorkey((0, 0, 0))
+    curr_window.set_alpha(best_triangle.transparent_factor)
+    displayer.draw.polygon(curr_window, best_triangle.triangle_color, best_triangle.vertices)
+    main_canvas_paper.blit(curr_window, (0, 0))
+displayer.display.update()

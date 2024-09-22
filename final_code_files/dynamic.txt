@@ -1,0 +1,43 @@
+while 1:
+    print("Iteration Count: ", counter_for_generation)  # Will print the iteration count
+    for event in displayer.event.get():
+        if event.type == QUIT:
+            displayer.image.save(main_canvas_paper, "best_generated_art.png")
+            displayer.quit()
+            sys.exit()
+
+    # Will draw all the art objects and calculate fitness for each.
+    exec(template_function)
+
+    # The art object with the least distance between the color values will be chosen as best
+
+    top_match = min(main_population, key=best_fit)
+    difference_track.append(top_match.fitness)
+
+    # Draw the best individual on the main canvas paper
+
+    main_canvas_paper.fill((255, 255, 255, 255))
+    exec(final_function)
+
+    top_candidates = top_match.triangles  # This will hold the mating pool of paintings for the next selection
+
+    i = 1
+    main_population = []
+    while i <= total_population:
+        template = PaintObjects(no_triangles_per_pop, horizontal_width, vertical_height, main_filtered_image,
+                                main_canvas_paper)
+        for i in range(no_triangles_per_pop):
+            template.triangles[i].triangle_color = top_candidates[i].triangle_color
+            template.triangles[i].transparent_factor = top_candidates[i].transparent_factor
+            template.triangles[i].vertices = top_candidates[i].vertices
+        if i == 3 or i == 4:
+            template.t_cross()
+            main_population.append(template)
+            i += 1
+        else:
+            template.r_mutation()
+            main_population.append(template)
+            i += 1
+
+    main_population.append(top_match)
+    counter_for_generation += 1
