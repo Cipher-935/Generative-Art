@@ -1,0 +1,1 @@
+I have made a python procedural algorithm in order to regenrate the input image with colorful traingles using various image processing libraries and object oriented programming. This is a project to showcase my skillset in python scripting.
